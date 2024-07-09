@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import AuthUser from "../components/AuthUser";
 
 export default function Dashboard() {
-  const { http } = AuthUser();
+  const { http,token } = AuthUser();
   const [userdetail, setUserdetail] = useState('');
-
+console.log("userdetail",userdetail)
   useEffect(() => {
     fetchUserDetail();
-  }, []);
+  }, [token]);
 
   const fetchUserDetail = () => {
     http.post('/me').then((res) => {

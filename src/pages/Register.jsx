@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import AuthUser from "../components/AuthUser";
 
 export default function Register() {
     const navigate = useNavigate();
-    const {http,setToken} = AuthUser();
+    const {http,setToken,token} = AuthUser();
     const [name,setName] = useState();
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
@@ -16,8 +16,15 @@ export default function Register() {
         })
     }
 
+
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    }, [token, navigate]);
+
     return(
-        <div className="row justify-content-left pt-5">
+        <div className="row justify-content-center pt-5">
             <div className="col-sm-6">
                 <div className="card p-4">
                     <h1 className="text-center mb-3">Register </h1>
