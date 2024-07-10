@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import AuthUser from "../components/AuthUser";
 import toast from "../components/Toast/index";
 import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, Typography, TextField, Button, Grid, CircularProgress, Box } from "@mui/material";
 
-
-export default function Login() {
+const Login = () => {
     const { http, setToken, token } = AuthUser();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
     const notify = React.useCallback((type, message) => {
         toast({ type, message });
     }, []);
-    
+
     const submitForm = async () => {
         try {
             const res = await http.post('/login', { email: email, password: password });
@@ -30,31 +30,54 @@ export default function Login() {
 
     useEffect(() => {
         if (token) {
-            navigate('/');
+            window.location.reload();
+            navigate('/jobmanage');
         }
     }, [token, navigate]);
 
 
+
     return (
-        <div className="row justify-content-center pt-5">
-            <div className="col-sm-6">
-                <div className="card p-4">
-                    <h1 className="text-center mb-3">Login </h1>
-                    <div className="form-group">
-                        <label>Email address:</label>
-                        <input type="email" className="form-control" placeholder="Enter email"
-                            onChange={e => setEmail(e.target.value)}
-                            id="email" />
-                    </div>
-                    <div className="form-group mt-3">
-                        <label>Password:</label>
-                        <input type="password" className="form-control" placeholder="Enter password"
-                            onChange={e => setPassword(e.target.value)}
-                            id="pwd" />
-                    </div>
-                    <button type="button" onClick={submitForm} className="btn btn-primary mt-4">Login</button>
-                </div>
-            </div>
-        </div>
-    )
+        <Grid container justifyContent="center" alignItems="center" style={{ height: '20vh' }}>
+            <Grid item xs={12} sm={6}>
+                <Card elevation={3}>
+                    <CardContent>
+                        <Typography variant="h4" align="center" gutterBottom>Login</Typography>
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                id="email"
+                                label="Email address"
+                                variant="outlined"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </Box>
+                        <Box sx={{ marginBottom: 2 }}>
+                            <TextField
+                                fullWidth
+                                id="password"
+                                label="Password"
+                                type="password"
+                                variant="outlined"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </Box>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={submitForm}
+                            sx={{ marginTop: 2 }}
+                        >
+                            Login
+                        </Button>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+    );
 }
+
+export default Login;

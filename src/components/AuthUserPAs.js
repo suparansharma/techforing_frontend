@@ -28,9 +28,7 @@ export default function AuthUser(){
 
         setToken(token);
         setUser(user);
-        navigate('/jobmanage');
-        window.location.reload();
-
+        navigate('/dashboard');
     }
 
     const logout = () => {
