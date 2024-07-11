@@ -39,7 +39,7 @@ export default function AuthUser(){
     }
 
     const http = axios.create({
-        baseURL:"https://techforingassignment.triomindsolution.com/api",
+        baseURL:process.env.REACT_APP_API_URL,
         headers:{
             "Content-type" : "application/json",
             "Authorization" : `Bearer ${token}`
